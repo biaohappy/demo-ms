@@ -63,7 +63,14 @@
                 <artifactId>core-common</artifactId>
                 <version>${core-common-version}</version>
             </dependency>
-            <!-- spring START-->
+            <!-- spring START-->     
+            <dependency>  
+                <groupId>org.springframework</groupId>  
+                <artifactId>spring-framework-bom</artifactId>  
+                 <version>${spring.version}</version>  
+                <type>pom</type>  
+                <scope>import</scope>      
+            </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
