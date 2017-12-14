@@ -63,14 +63,7 @@
                 <artifactId>core-common</artifactId>
                 <version>${core-common-version}</version>
             </dependency>
-            <!-- spring START-->     
-            <dependency>  
-                <groupId>org.springframework</groupId>  
-                <artifactId>spring-framework-bom</artifactId>  
-                 <version>${spring.version}</version>  
-                <type>pom</type>  
-                <scope>import</scope>      
-            </dependency>
+            <!-- spring START -->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
@@ -197,6 +190,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>dubbo</artifactId>
                 <version>${dubbo.version}</version>
+                <exclusions>
+                    <exclusion>  
+                        <artifactId>spring</artifactId>
+                        <groupId>org.springframework</groupId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>com.github.sgroschupf</groupId>
