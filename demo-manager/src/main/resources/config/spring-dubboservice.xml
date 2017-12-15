@@ -7,7 +7,7 @@
     <!-- 提供方应用信息，用于计算依赖关系 -->
     <dubbo:application name="demo-cms"  logger="slf4j"/>
     <!-- 使用zookeeper广播注册中心暴露服务地址 -->
-    <dubbo:registry protocol="zookeeper"  address="172.16.9.248:2181"/>
+    <dubbo:registry protocol="zookeeper"  address="172.16.9.247:2181,172.16.9.248:2181,172.16.9.249:2181"/>
 
     <dubbo:reference id="coreUserInfoService" interface="com.xiaobiao.manager.CoreUserInfoService"/>
 

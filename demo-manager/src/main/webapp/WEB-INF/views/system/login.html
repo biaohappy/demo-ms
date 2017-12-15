@@ -29,11 +29,10 @@
                     </div>
                     <div class="input_outer">
                         <span class="us_uer"></span>
-                        <input name="password" class="text"
-                               style="color: #FFFFFF !important; position:absolute; z-index:100;" value=""
+                        <input name="password" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;" value="" autocomplete="new-password"
                                type="password" placeholder="请输入密码">
                     </div>
-                    <span style="color: red" th:text="${errorMsg}"></span>
+                    <span style="color: red;margin-left: 30px" th:text="${errorMsg}"></span>
                     <div class="mb2" style="cursor: pointer">
                         <a class="act-but submit" onclick="sigIn()" style="color: #FFFFFF">登录</a>
                     </div>
