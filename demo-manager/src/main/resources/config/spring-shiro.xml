@@ -67,16 +67,19 @@
 
     <!-- 缓存管理器 -->
     <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-        <property name="cacheManagerConfigFile" value="classpath:config/shiro-ehcache.xml"/>
+        <property name="cacheManagerConfigFile" value="classpath:config/spring-shiro-ehcache.xml"/>
     </bean>
 
-    <!-- 会话管理器 session管理-->
+    <!-- 項目自定义的sessionDAO，与redis结合 -->
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
-        <!-- session的失效时长，单位毫秒 -->
-        <property name="globalSessionTimeout" value="6000000"/>
-        <!-- 删除失效的session -->
-        <property name="deleteInvalidSessions" value="true"/>
+        <property name="globalSessionTimeout" value="3600000"/>
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="sessionDAO" ref="redisSessionDao" />
+        <!-- 禁用shiro自带的会话调度器（检测是否过期），因为集成了redis，使用redisd的过期机制 -->
+        <property name="sessionValidationSchedulerEnabled" value="false" />
     </bean>
+    <bean id="redisSessionDao" class="com.xiaobiao.component.ShiroRedisSessionDao"></bean>
+    <bean id="sessionFactory" class="com.xiaobiao.component.ShiroSessionFactory"></bean>
 
     <!-- rememberMeManager管理器 -->
     <bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">

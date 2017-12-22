@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="classpath:/config/properties/demo.properties"/>
+
+    <!-- redis连接池 -->
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"
+          p:minIdle="${redis.minIdle}"
+          p:maxIdle="${redis.maxIdle}"
+          p:maxTotal="${redis.maxActive}"
+          p:maxWaitMillis="${redis.maxWait}"
+          p:testOnReturn="true"
+          p:testWhileIdle="true"
+          p:testOnBorrow="true" />
+
+    <!-- 连接工厂 -->
+    <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+          p:host-name="${redis.host}"
+          p:port="${redis.port}"
+          p:timeout="${redis.timeout}"
+          p:password=""
+          p:database="0"
+          p:usePool="true"
+          p:poolConfig-ref="jedisPoolConfig"/>
+
+    <!-- redisTemplate类 -->
+    <bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate" p:connectionFactory-ref="jedisConnectionFactory">
+        <property name="KeySerializer">
+            <bean class="org.springframework.data.redis.serializer.StringRedisSerializer"></bean>
+        </property>
+    </bean>
+
+</beans>

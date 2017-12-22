@@ -14,5 +14,5 @@
 
     <import resource="classpath:/config/spring-shiro.xml"/>
     <import resource="classpath:/config/spring-dubboservice.xml"/>
-
+    <import resource="classpath:/config/spring-data-redis.xml"/>
 </beans>
