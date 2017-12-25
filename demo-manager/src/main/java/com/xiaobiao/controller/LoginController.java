@@ -4,7 +4,6 @@ import com.google.common.base.Throwables;
 import com.xiaobiao.exception.DemoErrorCode;
 import com.xiaobiao.exception.MsException;
 import com.xiaobiao.model.ActiveUser;
-import com.xiaobiao.service.DemoService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -12,7 +11,6 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,29 +45,31 @@ public class LoginController {
 
     /**
      * 登录界面
+     *
      * @return
      */
     @RequestMapping("login")
-    public String login(){
+    public String login() {
         return "system/login";
     }
 
     /**
      * 执行登录
+     *
      * @param request
      * @return
      */
     @RequestMapping("signIn")
-    public String signIn(HttpServletRequest request){
+    public String signIn(HttpServletRequest request) {
         UsernamePasswordToken token = null;
         try {
             String userCode = request.getParameter("userCode");
             String password = request.getParameter("password");
-            request.setAttribute("userCode",userCode);
+            request.setAttribute("userCode", userCode);
             token = new UsernamePasswordToken(userCode, password);
             Subject subject = SecurityUtils.getSubject();
             subject.login(token);
-            log.info("userCode:"+userCode+",password:"+password);
+            log.info("userCode:" + userCode + ",password:" + password);
             return "redirect:toMain";
         } catch (UnknownAccountException e) {
             request.setAttribute("errorMsg", DemoErrorCode.ERROR_CODE_341002.getErrorDesc());
@@ -97,12 +97,13 @@ public class LoginController {
 
     /**
      * 系统首页
+     *
      * @param model
      * @param request
      * @return
      */
     @RequestMapping(value = "toMain")
-    public String first(Model model, HttpServletRequest request){
+    public String first(Model model, HttpServletRequest request) {
         try {
             //主体
             Subject subject = SecurityUtils.getSubject();
@@ -110,12 +111,12 @@ public class LoginController {
             ActiveUser activeUser = (ActiveUser) subject.getPrincipal();
             model.addAttribute("activeUser", activeUser);
             HttpSession session = request.getSession();
-            session.setAttribute("user",activeUser.getUserCode());
-        }catch (MsException e){
+            session.setAttribute("user", activeUser.getUserCode());
+        } catch (MsException e) {
             request.setAttribute("errorCode", e.getCode());
             request.setAttribute("errorMsg", e.getMessage());
             log.error("failed to signIn, CAUSE:{}", Throwables.getStackTraceAsString(e));
-        }catch (Exception e){
+        } catch (Exception e) {
             request.setAttribute("errorCode", DemoErrorCode.ERROR_CODE_341FFF.getErrorCode());
             request.setAttribute("errorMsg", DemoErrorCode.ERROR_CODE_341FFF.getErrorDesc());
             log.error("failed to toMain, CAUSE:{}", Throwables.getStackTraceAsString(e));
@@ -125,10 +126,11 @@ public class LoginController {
 
     /**
      * 退出
+     *
      * @return
      */
     @RequestMapping("logout")
-    public String logOut(){
+    public String logOut() {
         return "system/login";
     }
 }
