@@ -31,9 +31,6 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/")
 public class LoginController {
 
-    @Autowired
-    private DemoService demoService;
-
     /**
      * 散列次数
      */
@@ -68,11 +65,6 @@ public class LoginController {
         try {
             String userCode = request.getParameter("userCode");
             String password = request.getParameter("password");
-//
-//            //散列一次
-//            Object paswordMd5 = new SimpleHash("MD5", password, salt, Integer.parseInt(count));
-//            System.out.println(paswordMd5);
-
             request.setAttribute("userCode",userCode);
             token = new UsernamePasswordToken(userCode, password);
             Subject subject = SecurityUtils.getSubject();
